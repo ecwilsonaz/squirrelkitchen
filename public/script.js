@@ -265,6 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
         recognition.interimResults = false;
         recognition.lang = 'en-US';
 
+        let recognitionActive = false;
+
         recognition.onresult = (event) => {
             const transcript = event.results[event.resultIndex][0].transcript.trim().toLowerCase();
             console.log(`Recognized: ${transcript}`);
@@ -284,21 +286,30 @@ document.addEventListener('DOMContentLoaded', () => {
         recognition.onerror = (event) => {
             console.error(`Speech recognition error: ${event.error}`);
             if (event.error === 'aborted' || event.error === 'network') {
+                recognitionActive = false;
                 recognition.stop();
                 setTimeout(() => {
-                    recognition.start();
+                    if (!recognitionActive) {
+                        recognition.start();
+                        recognitionActive = true;
+                    }
                 }, 1000);
             }
         };
 
         recognition.onend = () => {
             console.log('Speech recognition ended, restarting...');
+            recognitionActive = false;
             setTimeout(() => {
-                recognition.start();
+                if (!recognitionActive) {
+                    recognition.start();
+                    recognitionActive = true;
+                }
             }, 1000);
         };
 
         recognition.start();
+        recognitionActive = true;
         console.log('Speech recognition started');
     } else {
         console.error('Speech recognition not supported in this browser.');
