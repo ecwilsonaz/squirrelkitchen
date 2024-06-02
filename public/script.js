@@ -3,32 +3,32 @@ const steps = [
         type: 'prep',
         instructions: 'Prepare the salmon on a plate:',
         ingredients: [
-            { name: '2 4-6 oz salmon fillets, patted dry', icon: '🐟', time: 3 }
+            { name: '2 4-6 oz salmon fillets, patted dry', icon: '🐟', time: 3, voice: 'salmon' }
         ]
     },
     {
         type: 'prep',
         instructions: 'Mix the spice rub into a bowl:',
         ingredients: [
-            { name: '2 tablespoons olive oil', icon: '🫒', time: 0.5 },
-            { name: '1 clove garlic, minced or crushed', icon: '🧄', time: 3 },
-            { name: '1/2 teaspoon chili powder', icon: '🫙', time: 0.5 },
-            { name: '1/2 teaspoon cumin', icon: '🫙', time: 0.5 },
-            { name: '1/2 teaspoon onion powder', icon: '🫙', time: 0.5 },
-            { name: '1/4 teaspoon black pepper', icon: '🫙', time: 0.5 },
-            { name: '1/4 teaspoon salt', icon: '🫙', time: .5 }
+            { name: '2 tablespoons olive oil', icon: '🫒', time: 0.5, voice: 'olive oil' },
+            { name: '1 clove garlic, minced or crushed', icon: '🧄', time: 3, voice: 'garlic' },
+            { name: '1/2 teaspoon chili powder', icon: '🫙', time: 0.5, voice: 'chili powder' },
+            { name: '1/2 teaspoon cumin', icon: '🫙', time: 0.5, voice: 'cumin'},
+            { name: '1/2 teaspoon onion powder', icon: '🫙', time: 0.5, voice: 'onion powder' },
+            { name: '1/4 teaspoon black pepper', icon: '🫙', time: 0.5, voice: 'pepper' },
+            { name: '1/4 teaspoon salt', icon: '🫙', time: 0.5, voice: 'salt' }
         ]
     },
     {
         type: 'prep',
         instructions: 'Add the salsa ingredients into a bowl:',
         ingredients: [
-            { name: '1 ripe avocado, pitted and diced', icon: '🥑', time: 2 },
-            { name: '2 tablespoons onion, diced', icon: '🧅', time: 3 },
-            { name: '2 tablespoons cilantro, minced', icon: '🌿', time: 3 },
-            { name: '1 tablespoon olive oil', icon: '🫒', time: 0.5 },
-            { name: '1 tablespoon lime juice', icon: '🍋‍🟩', time: 1.5 },
-            { name: 'salt and pepper to taste', icon: '🫙', time: 0.5 }
+            { name: '1 ripe avocado, pitted and diced', icon: '🥑', time: 2, voice: 'avocado' },
+            { name: '2 tablespoons onion, diced', icon: '🧅', time: 3, voice: 'onion'},
+            { name: '2 tablespoons cilantro, minced', icon: '🌿', time: 3, voice: 'cilantro' },
+            { name: '1 tablespoon olive oil', icon: '🫒', time: 0.5, voice: 'olive oil' },
+            { name: '1 tablespoon lime juice', icon: '🍋‍🟩', time: 1.5, voice: 'lime'},
+            { name: 'salt and pepper to taste', icon: '🫙', time: 0.5, voice: 'salt' }
         ]
     },
     {
@@ -269,9 +269,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function startRecognition() {
             if (!recognitionActive) {
-                recognition.start();
-                recognitionActive = true;
-                console.log('Speech recognition started');
+                try {
+                    recognition.start();
+                    recognitionActive = true;
+                    console.log('Speech recognition started');
+                } catch (error) {
+                    console.error('Error starting speech recognition:', error);
+                }
             }
         }
 
@@ -284,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const transcript = event.results[event.resultIndex][0].transcript.trim().toLowerCase();
             console.log(`Recognized: ${transcript}`);
 
-            if (transcript === 'next step') {
+            if (transcript === 'next') {
                 nextStepButton.click();
             } else if (transcript === 'start timer') {
                 const startButton = document.querySelector('.start-timer-btn:not([disabled])');
@@ -316,16 +320,18 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Speech recognition not supported in this browser.');
     }
 
-    function checkIngredient(transcript) {
+   function checkIngredient(transcript) {
         const currentIngredients = steps[currentStep]?.ingredients || [];
         currentIngredients.forEach(ingredient => {
             const ingredientElement = Array.from(document.querySelectorAll('.ingredient')).find(el => el.textContent.includes(ingredient.name));
-            if (ingredientElement && transcript.includes(ingredient.name.toLowerCase())) {
-                if (!ingredientElement.classList.contains('checked')) {
-                    ingredientElement.classList.add('checked');
-                    completedTime += ingredient.time;
-                    updateProgressBar();
-                    console.log(`Checked off ingredient: ${ingredient.name}`);
+            if (ingredientElement) {
+                if (transcript.includes(ingredient.voice.toLowerCase())) {
+                    if (!ingredientElement.classList.contains('checked')) {
+                        ingredientElement.classList.add('checked');
+                        completedTime += ingredient.time;
+                        updateProgressBar();
+                        console.log(`Checked off ingredient: ${ingredient.name}`);
+                    }
                 }
             }
         });
