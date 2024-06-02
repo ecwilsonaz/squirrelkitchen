@@ -290,4 +290,19 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Speech recognition not supported in this browser.');
     }
+    function checkIngredient(transcript) {
+        const currentIngredients = steps[currentStep]?.ingredients || [];
+        currentIngredients.forEach(ingredient => {
+            const ingredientElement = Array.from(document.querySelectorAll('.ingredient')).find(el => el.textContent.includes(ingredient.name));
+            if (ingredientElement && transcript.includes(ingredient.name.toLowerCase())) {
+                if (!ingredientElement.classList.contains('checked')) {
+                    ingredientElement.classList.add('checked');
+                    completedTime += ingredient.time;
+                    updateProgressBar();
+                    console.log(`Checked off ingredient: ${ingredient.name}`);
+                }
+            }
+        });
+    }
+
 });
