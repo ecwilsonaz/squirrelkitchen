@@ -267,6 +267,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let recognitionActive = false;
 
+        function startRecognition() {
+            if (!recognitionActive) {
+                recognition.start();
+                recognitionActive = true;
+                console.log('Speech recognition started');
+            }
+        }
+
+        recognition.onstart = () => {
+            recognitionActive = true;
+            console.log('Speech recognition started');
+        };
+
         recognition.onresult = (event) => {
             const transcript = event.results[event.resultIndex][0].transcript.trim().toLowerCase();
             console.log(`Recognized: ${transcript}`);
@@ -285,32 +298,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         recognition.onerror = (event) => {
             console.error(`Speech recognition error: ${event.error}`);
+            recognitionActive = false;
             if (event.error === 'aborted' || event.error === 'network') {
-                recognitionActive = false;
                 recognition.stop();
-                setTimeout(() => {
-                    if (!recognitionActive) {
-                        recognition.start();
-                        recognitionActive = true;
-                    }
-                }, 1000);
+                setTimeout(startRecognition, 1000);
             }
         };
 
         recognition.onend = () => {
             console.log('Speech recognition ended, restarting...');
             recognitionActive = false;
-            setTimeout(() => {
-                if (!recognitionActive) {
-                    recognition.start();
-                    recognitionActive = true;
-                }
-            }, 1000);
+            setTimeout(startRecognition, 1000);
         };
 
-        recognition.start();
-        recognitionActive = true;
-        console.log('Speech recognition started');
+        startRecognition();
     } else {
         console.error('Speech recognition not supported in this browser.');
     }
