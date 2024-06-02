@@ -61,9 +61,14 @@ const steps = [
         timerLabel: 'Cook salmon (skin side up)'
     },
     {
-        type: 'finish',
+        type: 'cooking',
         instructions: 'Remove from salmon from pan, top with avocado salsa, and serve immediately.',
         time: 1
+    },
+    {
+        type: 'finish',
+        instructions: 'Enjoy!',
+        time: 0
     }
 ];
 
@@ -271,11 +276,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (startButton) {
                     startButton.click();
                 }
+            } else {
+                checkIngredient(transcript);
             }
         };
 
         recognition.onerror = (event) => {
             console.error(`Speech recognition error: ${event.error}`);
+            if (event.error === 'aborted' || event.error === 'network') {
+                recognition.stop();
+                setTimeout(() => {
+                    recognition.start();
+                }, 1000);
+            }
         };
 
         recognition.onend = () => {
@@ -290,6 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Speech recognition not supported in this browser.');
     }
+
     function checkIngredient(transcript) {
         const currentIngredients = steps[currentStep]?.ingredients || [];
         currentIngredients.forEach(ingredient => {
@@ -304,5 +318,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
 });
