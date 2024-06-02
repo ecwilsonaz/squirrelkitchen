@@ -29,7 +29,7 @@ def organize_ingredients_by_aisle(ingredients):
 
 def generate_staples_markdown(staples):
     return f"### Staples\n{''.join(f'- [ ] {staple}\n' for staple in staples)}\n"
-
+    
 def generate_aisles_markdown(aisles):
     return ''.join(f"### Main Ingredients\n#### {aisle}\n{''.join(f'- [ ] {ingredient}\n' for ingredient in ingredients)}\n" for aisle, ingredients in aisles.items())
 

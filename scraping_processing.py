@@ -2,7 +2,7 @@ from recipe_scrapers import scrape_me
 import re
 
 def scrape_recipe(url):
-    scraper = scrape_me(url)
+    scraper = scrape_me(url, wild_mode=True)
     return scraper.title(), scraper.ingredients(), scraper.instructions().split('\n')
 
 def process_recipe_text_input(ingredients_text, instructions_text):
