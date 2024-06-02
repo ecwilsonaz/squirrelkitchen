@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salmon with Avocado Salsa</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Salmon with Avocado Salsa</h1>
+        <p id="recipe-description" class="recipe-description">Perfectly seasoned salmon is sauteed in a pan and topped with a freshly made avocado salsa.</p>
+        <div id="progress-container" class="progress-container">
+            <div class="progress-bar">
+                <div id="progress" class="progress-bar-inner"></div>
+            </div>
+            <div id="progress-text" class="progress-text"></div>
+        </div>
+        <div id="active-timers" class="active-timers"></div>
+        <div id="step-container" class="step-container"></div>
+
+        <button id="next-step">Next Step</button>
+    </div>
+    <audio id="alarm-sound" src="alarm.mp3" loop></audio>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

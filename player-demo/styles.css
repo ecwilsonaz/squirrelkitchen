@@ -1,0 +1,164 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1024px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.step-container {
+    margin-top: 20px;
+}
+
+.step {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fafafa;
+    position: relative;
+    text-align: center; /* Center the content inside the step */
+}
+
+.step.active {
+    border-color: #007bff;
+    background-color: #e9f7fe;
+}
+
+.ingredient-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the ingredients */
+    gap: 10px; /* Space between ingredients */
+    margin-top: 10px;
+}
+
+.ingredient {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    white-space: nowrap; /* Ensure no wrapping */
+}
+
+.ingredient.checked {
+    text-decoration: line-through;
+    color: #999;
+    background-color: #f0f0f0;
+}
+
+.timer {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    text-align: center;
+
+    display: block; /* Ensure the timer element is displayed as a block */
+}
+
+.start-timer-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.start-timer-btn:hover {
+    background-color: #0056b3;
+}
+
+.progress-container {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+
+.progress-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-inner {
+    height: 20px;
+    background-color: #007bff;
+    width: 0; /* Initial width for progress */
+}
+
+.progress-text {
+    text-align: center;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+#next-step {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 20px;
+
+}
+
+#next-step:hover {
+    background-color: #218838;
+}
+
+.active-timers {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.active-timer {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.active-timer span {
+    
+    margin-left: 5px;
+}
+
+.recipe-description {
+    text-align: center;
+    color: #666;
+    margin-top: 10px;
+    font-size: 1.1em;
+}
+
